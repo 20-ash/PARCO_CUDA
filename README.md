@@ -127,6 +127,33 @@ Ten arrays of 4-byte floating-point elements require approximately 40 GiB of mem
 
 <br>
 
+**Summary Table of HtoD/DtoH Overhead**
+- Overhead from `cudaMallocManaged` is generally the same regardless of prefetch, page creation, and MemAdvise conditions.
+- Overhead from `cudaMemPrefetchAsync` increases drastically when page creation is included.
+
+| **2^20** | cudaMallocManaged | cudaMemPrefetchAsync | 
+|:---:|:---:|:---:|
+| CUDA Unified | 214.65 ms | N/A |
+| CUDA Prefetch | 214.76 ms | 2.57 ms |
+| CUDA Prefetch + Page Creation | 207.95 ms | 4.57 ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 234.19 ms | 5.03 ms |
+
+| **2^24** | cudaMallocManaged | cudaMemPrefetchAsync | 
+|:---:|:---:|:---:|
+| CUDA Unified | 267.22 ms | N/A |
+| CUDA Prefetch | 211.93 ms | 95.45 ms |
+| CUDA Prefetch + Page Creation | 217.18 ms | 252.15 ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 211.47 ms | 222.92 ms |
+
+| **2^28** | cudaMallocManaged | cudaMemPrefetchAsync | 
+|:---:|:---:|:---:|
+| CUDA Unified | 202.02 ms | N/A |
+| CUDA Prefetch | 206.25 ms | 525.31 ms |
+| CUDA Prefetch + Page Creation | 208.63 ms | 1032.13 ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 215.61 ms | 1001.79 ms |
+
+<br>
+
 ## Analysis of Results
 **Analysis of kernel execution time and speed performance across all platforms**
 
@@ -219,33 +246,6 @@ Both SIMD and SIMT exploit data parallelism but differ in how they process data.
 
     * Pros: Thousands of threads enable greater parallelism and memory bandwidth utilization. Scalar-style kernel code is also simpler and scales more easily across input sizes.
     * Cons: CPU-GPU data movement overhead, initial page-fault costs, and potential branch divergence. In our case, the `if (A[i] >= B[i])` condition is simple, so divergence is expected to have little impact.
- 
-<br>
-
-**Summary Table of HtoD/DtoH Overhead**
-- Overhead from `cudaMallocManaged` is generally the same regardless of prefetch, page creation, and MemAdvise conditions.
-- Overhead from `cudaMemPrefetchAsync` increases drastically when page creation is included.
-
-| **2^20** | cudaMallocManaged | cudaMemPrefetchAsync | 
-|:---:|:---:|:---:|
-| CUDA Unified | 214.65 ms | N/A |
-| CUDA Prefetch | 214.76 ms | 2.57 ms |
-| CUDA Prefetch + Page Creation | 207.95 ms | 4.57 ms |
-| CUDA Prefetch + Page Creation + MemAdvise | 234.19 ms | 5.03 ms |
-
-| **2^24** | cudaMallocManaged | cudaMemPrefetchAsync | 
-|:---:|:---:|:---:|
-| CUDA Unified | 267.22 ms | N/A |
-| CUDA Prefetch | 211.93 ms | 95.45 ms |
-| CUDA Prefetch + Page Creation | 217.18 ms | 252.15 ms |
-| CUDA Prefetch + Page Creation + MemAdvise | 211.47 ms | 222.92 ms |
-
-| **2^28** | cudaMallocManaged | cudaMemPrefetchAsync | 
-|:---:|:---:|:---:|
-| CUDA Unified | 202.02 ms | N/A |
-| CUDA Prefetch | 206.25 ms | 525.31 ms |
-| CUDA Prefetch + Page Creation | 208.63 ms | 1032.13 ms |
-| CUDA Prefetch + Page Creation + MemAdvise | 215.61 ms | 1001.79 ms |
 
 <br>
 
