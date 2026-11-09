@@ -22,7 +22,7 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 | **2^28** | 1102.47 ms | 617.75 ms | 534.14 ms | 524.44 ms | 360.37 ms |
 
 
-| **2^20** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program
+| **2^20** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
 | C | 0.0 ms | 0.0 ms | 
 | x86-64 | 0.0 ms | 0.0 ms | 
@@ -33,7 +33,7 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 | CUDA Prefetch + Page Creation | 0.0 ms | 0.0 ms |   
 | CUDA Prefetch + Page Creation + creatition + memadvice | 0.0 ms | 0.0 ms |   
 
-| **2^26** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program
+| **2^26** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program |
 |:---:|:---:|
 | C | 0.0 ms | 0.0 ms | 
 | x86-64 | 0.0 ms | 0.0 ms | 
@@ -44,7 +44,7 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 | CUDA Prefetch + Page Creation | 0.0 ms | 0.0 ms |   
 | CUDA Prefetch + Page Creation + creatition + memadvice | 0.0 ms | 0.0 ms |
 
-| **2^28** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program
+| **2^28** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program |
 |:---:|:---:|
 | C | 0.0 ms | 0.0 ms | 
 | x86-64 | 0.0 ms | 0.0 ms | 
