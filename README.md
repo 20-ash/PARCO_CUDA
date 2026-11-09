@@ -91,6 +91,10 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 | CUDA Prefetch + Page Creation | 524.44 ms | 2.10× |
 | CUDA Prefetch + Page Creation + MemAdvise | 360.37 ms | 3.06× |
 
+<br>
+
+**Comparative table of kernel time**
+
 | **2^20** | Kernel Avg | Kernel Min | Kernel Max | 
 |:---:|:---:|:---:|:---:|
 | CUDA Unified | 0.18 ms | 0.07 ms | 3.50 ms |
