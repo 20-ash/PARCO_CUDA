@@ -55,6 +55,27 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 | CUDA Prefetch + Page Creation | 524.44 ms | 2.10× |
 | CUDA Prefetch + Page Creation + MemAdvise | 360.37 ms | 3.06× |
 
+| **2^20** | Kernel Avg | Kernel Min | Kernel Max | 
+|:---:|:---:|:---:|:---:|
+| CUDA Unified | 2.60 ms | 1.46× | X.XX ms |
+| CUDA Prefetch | 2.10 ms | 1.81× | X.XX ms |
+| CUDA Prefetch + Page Creation | 2.05 ms | 1.85× | X.XX ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 1.40 ms | 2.71× | X.XX ms |
+
+| **2^24** | Kernel Avg | Kernel Min | Kernel Max | 
+|:---:|:---:|:---:|:---:|
+| CUDA Unified | 2.60 ms | 1.46× | X.XX ms |
+| CUDA Prefetch | 2.10 ms | 1.81× | X.XX ms |
+| CUDA Prefetch + Page Creation | 2.05 ms | 1.85× | X.XX ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 1.40 ms | 2.71× | X.XX ms |
+
+| **2^28** | Kernel Avg | Kernel Min | Kernel Max | 
+|:---:|:---:|:---:|:---:|
+| CUDA Unified | 2.60 ms | 1.46× | X.XX ms |
+| CUDA Prefetch | 2.10 ms | 1.81× | X.XX ms |
+| CUDA Prefetch + Page Creation | 2.05 ms | 1.85× | X.XX ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 1.40 ms | 2.71× | X.XX ms |
+
 
 ## Analysis of Results
 **Analysis of kernel execution time**
