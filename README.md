@@ -119,23 +119,28 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 <br>
 
 ## Analysis of Results
-**Analysis of kernel execution time**
-**Analysis of speed performance across all platforms**
+**Analysis of kernel execution time and speed performance across all platforms**
 
-#### CUDA Unified (Grid-Stride Loop, No Prefetch, No MemAdvise)
+- #### CUDA Unified (Grid-Stride Loop, No Prefetch, No MemAdvise)
 CUDA Unified is baseline CUDA variant where no optimizations were placed. It had an execution time of 2.60 ms / 164.83 ms / 617.75 ms for 2^20 / 2^26 / 2^28 respectively. The Kernel max time of 3.50 ms / 191.12 ms / 785.33 ms comes entirely from the first execution. At that point, the values of A and B are still in CPU memory, and C and idx have no allocated pages anywhere. When program access a page that is not allocated yet on the device, it triggers a page fault and stalls while the driver either migrates the page host-to-device (A, B) or creates it in device memory (C, idx). This on-demand migration happens in small pieces: at 2^28, nsys recorded 20,491 host-to-device transfers averaging only 0.089 MB each, which uses the PCIe bus inefficiently and adds a per-fault overhead.
 
 Once every page is on the Device, launches 2–30 run at the Kernel min time of 0.069 ms / 4.35 ms / 18.75 ms. That makes the first launch ~42–50× slower. This single outlier pushes the average kernel time to 0.18 ms / 10.68 ms / 44.33 ms, more than double the Kernel min.
 
-#### CUDA Prefetch
+<br>
+
+- #### CUDA Prefetch
 CUDA Prefetch is grid-stride loop with the prefetch optimization. It had an execution time of 2.10 ms / 133.80 ms / 534.14 ms respectively. Prefetch is where the host requests the migration of data before executing the kernel, instead of the GPU discovering missing pages one fault at a time during runtime. This results in a Kernel Max time of: 1.40 ms / 77.71 ms / 310.49 ms. The time max time is significantly reduced while the Kernel Min time remains the same at: 0.07 ms / 4.35 ms / 18.30 ms.
 
-#### CUDA Prefetch + Page Creation
+<br>
+
+- #### CUDA Prefetch + Page Creation
 This variant adds explicit page creation. A and B are prefetched to the CPU before initialization, so their pages exist in host memory, and C and idx are prefetched to the Device before the kernel, so their pages are created directly in Device memory. Because C and idx hold no data yet, this prefetch transfers nothing. It only creates the pages at the destination. It had an execution time of 2.05 ms / 131.19 ms / 524.44 ms. With every page the kernel needs already exists on the Device before the first transfer. This results in no page faults occurring. The Kernel max and min are very similar at 0.070 ms / 4.350 ms / 18.44 ms. 
 
 The end-to-end improvement over Prefetch is small, because the transfers are unchanged: A and B still travel host-to-device (2,147.48 MB), and all four arrays still return device-to-host (4,294.97 MB) for the correctness check. Page creation removes the first-transfer penalty but does not reduce the amount of data moved.
 
-#### CUDA Prefetch + Page Creation + MemAdvise
+<br>
+
+- #### CUDA Prefetch + Page Creation + MemAdvise
 This is prefetch along with the optimizations of page creation and memadvice. It has an execution time of  1.40 ms / 90.02 ms / 360.37 ms. Memadvice essentially tells the device to only copy the data from the host. Kernel Min and Max of 0.07 ms / 4.34 ms / 18.44 ms is essentially the same but the time saved from it occurs from the execution time and amount of data moved. 
 
 This variant adds cudaMemAdvise hints on A and B: cudaMemAdviseSetPreferredLocation and cudaMemAdviseSetReadMostly. It had an execution time of 1.40 ms / 90.02 ms / 360.37 ms, the fastest of the CUDA variants.
@@ -146,6 +151,7 @@ The kernel itself is unaffected: Kernel min 0.066 / 4.349 / 18.01 ms and Kernel 
 
 To summarize the CUDA Variants, the optimization of the device runtime is the reduction combination of both amount of data and overhead applied when running these kernels. Prefetch and Page creation essentially reserves the spaces and migrates data over to the device, while MemAdvice allows input data to no longer be returned. This allows for the efficient utilization of GPU.
 
+<br>
 
 ## Discussions
 
