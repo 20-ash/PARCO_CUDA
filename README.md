@@ -126,19 +126,13 @@ CUDA Unified is baseline CUDA variant where no optimizations were placed. It had
 
 Once every page is on the Device, launches 2–30 run at the Kernel min time of 0.069 ms / 4.35 ms / 18.75 ms. That makes the first launch ~42–50× slower. This single outlier pushes the average kernel time to 0.18 ms / 10.68 ms / 44.33 ms, more than double the Kernel min.
 
-<br>
-
 - #### CUDA Prefetch
 CUDA Prefetch is grid-stride loop with the prefetch optimization. It had an execution time of 2.10 ms / 133.80 ms / 534.14 ms respectively. Prefetch is where the host requests the migration of data before executing the kernel, instead of the GPU discovering missing pages one fault at a time during runtime. This results in a Kernel Max time of: 1.40 ms / 77.71 ms / 310.49 ms. The time max time is significantly reduced while the Kernel Min time remains the same at: 0.07 ms / 4.35 ms / 18.30 ms.
-
-<br>
 
 - #### CUDA Prefetch + Page Creation
 This variant adds explicit page creation. A and B are prefetched to the CPU before initialization, so their pages exist in host memory, and C and idx are prefetched to the Device before the kernel, so their pages are created directly in Device memory. Because C and idx hold no data yet, this prefetch transfers nothing. It only creates the pages at the destination. It had an execution time of 2.05 ms / 131.19 ms / 524.44 ms. With every page the kernel needs already exists on the Device before the first transfer. This results in no page faults occurring. The Kernel max and min are very similar at 0.070 ms / 4.350 ms / 18.44 ms. 
 
 The end-to-end improvement over Prefetch is small, because the transfers are unchanged: A and B still travel host-to-device (2,147.48 MB), and all four arrays still return device-to-host (4,294.97 MB) for the correctness check. Page creation removes the first-transfer penalty but does not reduce the amount of data moved.
-
-<br>
 
 - #### CUDA Prefetch + Page Creation + MemAdvise
 This is prefetch along with the optimizations of page creation and memadvice. It has an execution time of  1.40 ms / 90.02 ms / 360.37 ms. Memadvice essentially tells the device to only copy the data from the host. Kernel Min and Max of 0.07 ms / 4.34 ms / 18.44 ms is essentially the same but the time saved from it occurs from the execution time and amount of data moved. 
