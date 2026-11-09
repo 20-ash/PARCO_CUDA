@@ -23,7 +23,7 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 
 
 | **2^20** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program
-|:---:|:---:|
+|:---:|:---:|:---:|
 | C | 0.0 ms | 0.0 ms | 
 | x86-64 | 0.0 ms | 0.0 ms | 
 | x86-64 SIMD XMM | 0.0 ms | 0.0 ms | 
