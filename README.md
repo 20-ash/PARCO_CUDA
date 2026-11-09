@@ -155,6 +155,8 @@ Our group did not encounter significant problems throughout the project, as the 
 
 <br>
 
+c.) Between SIMD and SIMT, which one is faster? Give some use cases in which one is better than the other.
+
 **SIMD vs. SIMT**
 
 Both SIMD and SIMT exploit data parallelism but differ in how they process data. In SIMD, a single thread processes multiple elements using packed instructions. In our assembly kernels, we manually processed 4 floats using XMM registers or 8 using YMM registers, requiring explicit index increments and remainder handling (e.g., 3 leftover elements at n = 1003). In SIMT, each thread executes the same scalar code on one element at a time, with the GPU grouping threads into warps of 32 and managing their execution. Our grid-stride loop and `i < N` condition let each thread cover multiple elements at the larger sizes and handled different input sizes without additional remainder code.
