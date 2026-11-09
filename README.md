@@ -169,4 +169,27 @@ Both SIMD and SIMT exploit data parallelism but differ in how they process data.
     * Pros: Thousands of threads enable greater parallelism and memory bandwidth utilization. Scalar-style kernel code is also simpler and scales more easily across input sizes.
     * Cons: CPU-GPU data movement overhead, initial page-fault costs, and potential branch divergence. In our case, the `if (A[i] >= B[i])` condition is simple, so divergence is expected to have little impact.
 
+**Summary Table of HtoD/DtoH Overhead**
+
+| **2^20** | cudaMallocManaged | cudaDeviceSynchronize | cudaMemPrefetchAsync | 
+|:---:|:---:|:---:|:---:|
+| CUDA Unified | 214.65 ms | 5.31 ms | N/A |
+| CUDA Prefetch | 214.76 ms | 3.28 ms | 2.57 ms |
+| CUDA Prefetch + Page Creation | 207.95 ms | 1.99 ms | 4.57 ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 234.19 ms | 1.89 ms | 5.03 ms |
+
+| **2^24** | cudaMallocManaged | cudaDeviceSynchronize | cudaMemPrefetchAsync | 
+|:---:|:---:|:---:|:---:|
+| CUDA Unified | 267.22 ms | 318.91 ms | N/A |
+| CUDA Prefetch | 211.93 ms | 203.93 ms | 95.45 ms |
+| CUDA Prefetch + Page Creation | 217.18 ms | 130.32 ms | 252.15 ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 211.47 ms | 130.56 ms | 222.92 ms |
+
+| **2^28** | cudaMallocManaged | cudaDeviceSynchronize | cudaMemPrefetchAsync | 
+|:---:|:---:|:---:|:---:|
+| CUDA Unified | 202.02 ms | 1329.79 ms | N/A |
+| CUDA Prefetch | 206.25 ms | 841.66 ms | 525.31 ms |
+| CUDA Prefetch + Page Creation | 208.63 ms | 550.46 ms | 1032.13 ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 215.61 ms | 549.07 ms | 1001.79 ms |
+
 Overall, SIMT is more suitable for larger inputs because it takes advantage of greater parallelism and GPU memory bandwidth. SIMD is more practical for smaller inputs since it avoids GPU launch and data transfer overhead.
