@@ -17,7 +17,7 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 
 | **2^20** | Execution Time | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
-| C | 3.80 ms | 1.00× |
+| C | 3.80 ms | - |
 | x86-64 | X.XX ms | 0.0× |
 | x86-64 SIMD XMM | X.XX ms | 0.0× |
 | x86-64 SIMD YMM | X.XX ms | 0.0× |
@@ -28,7 +28,7 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 
 | **2^26** | Execution Time | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
-| C | 294.83 ms | 1.00× |
+| C | 294.83 ms | - |
 | x86-64 | X.XX ms | 0.0× |
 | x86-64 SIMD XMM | X.XX ms | 0.0× |
 | x86-64 SIMD YMM | X.XX ms | 0.0× |
@@ -39,7 +39,7 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 
 | **2^28** | Execution Time | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
-| C | 1102.47 ms | 1.00× |
+| C | 1102.47 ms | - |
 | x86-64 | X.XX ms | 0.0× |
 | x86-64 SIMD XMM | X.XX ms | 0.0× |
 | x86-64 SIMD YMM | X.XX ms | 0.0× |
