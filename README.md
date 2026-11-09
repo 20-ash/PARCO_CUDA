@@ -78,25 +78,24 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 
 | **2^20** | Kernel Avg | Kernel Min | Kernel Max | 
 |:---:|:---:|:---:|:---:|
-| CUDA Unified | 2.60 ms | 1.46× | X.XX ms |
-| CUDA Prefetch | 2.10 ms | 1.81× | X.XX ms |
-| CUDA Prefetch + Page Creation | 2.05 ms | 1.85× | X.XX ms |
-| CUDA Prefetch + Page Creation + MemAdvise | 1.40 ms | 2.71× | X.XX ms |
+| CUDA Unified | 0.18 ms | 0.07 ms | 3.50 ms |
+| CUDA Prefetch | 0.11 ms | 0.07 | 1.40 ms |
+| CUDA Prefetch + Page Creation | 0.07 ms | 0.07 ms | 0.07 ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 0.07 ms | 0.07 ms | 0.07 ms |
 
 | **2^24** | Kernel Avg | Kernel Min | Kernel Max | 
 |:---:|:---:|:---:|:---:|
-| CUDA Unified | 2.60 ms | 1.46× | X.XX ms |
-| CUDA Prefetch | 2.10 ms | 1.81× | X.XX ms |
-| CUDA Prefetch + Page Creation | 2.05 ms | 1.85× | X.XX ms |
-| CUDA Prefetch + Page Creation + MemAdvise | 1.40 ms | 2.71× | X.XX ms |
+| CUDA Unified | 10.68 ms | 4.35 ms | 191.12 ms |
+| CUDA Prefetch | 6.80 ms | 4.35 ms | 77.71 ms |
+| CUDA Prefetch + Page Creation | 4.35 ms | 4.34 ms | 4.34 ms |
+| CUDA Prefetch + Page Creation + MemAdvise | 4.35 ms | 4.34 ms | 4.34 ms |
 
 | **2^28** | Kernel Avg | Kernel Min | Kernel Max | 
 |:---:|:---:|:---:|:---:|
-| CUDA Unified | 2.60 ms | 1.46× | X.XX ms |
-| CUDA Prefetch | 2.10 ms | 1.81× | X.XX ms |
-| CUDA Prefetch + Page Creation | 2.05 ms | 1.85× | X.XX ms |
+| CUDA Unified | 44.33 ms | 18.75 ms | 783.33 ms |
+| CUDA Prefetch | 28.06 ms | 18.30 ms | 310.49 ms |
+| CUDA Prefetch + Page Creation | 18.35 ms | 18.04 ms | 18.44 ms |
 | CUDA Prefetch + Page Creation + MemAdvise | 1.40 ms | 2.71× | X.XX ms |
-
 <br>
 
 ## Analysis of Results
