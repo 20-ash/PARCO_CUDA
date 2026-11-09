@@ -168,6 +168,8 @@ Both SIMD and SIMT exploit data parallelism but differ in how they process data.
 
     * Pros: Thousands of threads enable greater parallelism and memory bandwidth utilization. Scalar-style kernel code is also simpler and scales more easily across input sizes.
     * Cons: CPU-GPU data movement overhead, initial page-fault costs, and potential branch divergence. In our case, the `if (A[i] >= B[i])` condition is simple, so divergence is expected to have little impact.
+ 
+<br>
 
 **Summary Table of HtoD/DtoH Overhead**
 
@@ -191,5 +193,7 @@ Both SIMD and SIMT exploit data parallelism but differ in how they process data.
 | CUDA Prefetch | 206.25 ms | 841.66 ms | 525.31 ms |
 | CUDA Prefetch + Page Creation | 208.63 ms | 550.46 ms | 1032.13 ms |
 | CUDA Prefetch + Page Creation + MemAdvise | 215.61 ms | 549.07 ms | 1001.79 ms |
+
+<br>
 
 Overall, SIMT is more suitable for larger inputs because it takes advantage of greater parallelism and GPU memory bandwidth. SIMD is more practical for smaller inputs since it avoids GPU launch and data transfer overhead.
