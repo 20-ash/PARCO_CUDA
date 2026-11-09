@@ -193,6 +193,8 @@ Both SIMD and SIMT exploit data parallelism but differ in how they process data.
 <br>
 
 **Summary Table of HtoD/DtoH Overhead**
+- Overhead from `cudaMallocManaged` is generally the same regardless of prefetch, page creation, and MemAdvise conditions.
+- Overhead from `cudaMemPrefetchAsync` increases drastically when page creation is included.
 
 | **2^20** | cudaMallocManaged | cudaMemPrefetchAsync | 
 |:---:|:---:|:---:|
