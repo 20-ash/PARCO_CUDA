@@ -108,11 +108,13 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 ## Discussions
 
 **Problems Encountered, Methodology, and AHA Moments**
+
 Our group did not encounter significant problems throughout the project, as the implementation followed the approach from the previous discovery series and recorded class lecture. We kept the kernel identical across all four CUDA variants to ensure that differences in execution time came from memory management techniques rather than computation. Each variant was tested 30 times using problem sizes of 2²⁰, 2²⁶, and 2²⁸, profiled with nsys and ncu, and checked against the same max/index logic as the C version, with the first and last five elements displayed for verification. We also didn't have any major AHA moments since most of the concepts were already discussed in class, but working on our own kernel helped us see how much data transfer between the CPU and GPU affects performance.
 
 <br>
 
 **SIMD vs. SIMT**
+
 Both SIMD and SIMT exploit data parallelism but differ in how they process data. In SIMD, a single thread processes multiple elements using packed instructions. In our assembly kernels, we manually processed 4 floats using XMM registers or 8 using YMM registers, requiring explicit index increments and remainder handling (e.g., 3 leftover elements at n = 1003). In SIMT, each thread executes the same scalar code on one element at a time, with the GPU grouping threads into warps of 32 and managing their execution. Our grid-stride loop and `i < N` condition let each thread cover multiple elements at the larger sizes and handled different input sizes without additional remainder code.
 
 - **SIMD**
