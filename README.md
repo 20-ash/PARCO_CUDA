@@ -54,6 +54,10 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 | CUDA Prefetch + Page Creation |  ![C](screenshots/CUDA3_20.png) | ![C](screenshots/CUDA3_24.png) | ![C](screenshots/CUDA3_28.png) |
 | CUDA Prefetch + Page Creation + MemAdvise | ![C](screenshots/CUDA4_20.png) | ![C](screenshots/CUDA4_24.png) | ![C](screenshots/CUDA4_28.png) |
 
+<br>
+
+**Comparative table of execution time**
+
 | **2^20** | Execution Time | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
 | C | 3.80 ms | - |
@@ -86,6 +90,10 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 | CUDA Prefetch | 534.14 ms | 2.06× |
 | CUDA Prefetch + Page Creation | 524.44 ms | 2.10× |
 | CUDA Prefetch + Page Creation + MemAdvise | 360.37 ms | 3.06× |
+
+<br>
+
+**CUDA Kernel Times**
 
 | **2^20** | Kernel Avg | Kernel Min | Kernel Max | 
 |:---:|:---:|:---:|:---:|
