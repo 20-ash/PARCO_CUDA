@@ -18,6 +18,7 @@ Five variants are implemented, each in its own notebook cell: (1) a C/C++ progra
 
 Each kernel is run 30 times with no warm-up launch. The C version is timed in the program; CUDA kernel times (avg/min/max) come from `nsys`. Each CUDA output is verified against a host-side recomputation of the same max/index logic as the C version, reporting a correctness percentage, with the first and last 5 elements displayed. `ncu` is used for kernel-level profiling.
 
+
 **AI Usage Declaration**
 
 ## Program Outputs
