@@ -105,6 +105,9 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 <br>
 
 ## Discussions
-**problems encountered and solutions made, unique methodology used, AHA moments**
+Our group did not encounter significant problems throughout the project, as the implementation followed the approach from the previous discovery series and recorded class lecture. We kept the kernel identical across all four CUDA variants to ensure that differences in execution time came from memory management techniques rather than computation. Each variant was tested 30 times using problem sizes of 2²⁰, 2²⁶, and 2²⁸, profiled with nsys and ncu, and checked against the same max/index logic as the C version, with the first and last five elements displayed for verification. We also didn't have any major AHA moments since most of the concepts were already discussed in class, but working on our own kernel helped us see how much data transfer between the CPU and GPU affects performance.
+
+<br>
+
 **differences between SIMD and SIMT in handling parallelism. Include also the PROS and CONS of using SIMD and SIMT in your use case.**
 
