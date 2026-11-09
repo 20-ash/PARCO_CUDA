@@ -12,7 +12,7 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 
 **AI Usage Declaration**
 
-## Analysis of Results
+## Program Outputs
 
 
 | **2^20** | Execution Time | Speedup vs Baseline C Program |
@@ -48,4 +48,12 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 | CUDA Prefetch + Page Creation | 524.44 ms | 2.10× |
 | CUDA Prefetch + Page Creation + MemAdvise | 360.37 ms | 3.06× |
 
+
+## Analysis of Results
+**Analysis of kernel execution time**
+**Analysis of speed performance across all platforms**
+
+## Discussions
+**problems encountered and solutions made, unique methodology used, AHA moments**
+**differences between SIMD and SIMT in handling parallelism. Include also the PROS and CONS of using SIMD and SIMT in your use case.**
 
