@@ -3,10 +3,12 @@
 https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sharing
 
 **Group 4**
-- Copon, Matthew Joshua
-- Lee, Ashley Fiona
-- Ong, Eiress Bassey
-- Xu, Kai Wen
+| Name | GitHub |
+| :--- | :--- |
+| Copon, Matthew Joshua | [@bananoms](http://github.com/bananoms) |
+| Lee, Ashley Fiona | [@20-ash](https://github.com/20-ash) |
+| Ong, Eiress Bassey | [@mochi-tofu](https://github.com/mochi-tofu) |
+| Xu, Kai Wen | [@Kai-Wen-Xu](https://github.com/Kai-Wen-Xu) |
 
 <br>
 
