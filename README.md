@@ -170,10 +170,20 @@ a
 a
 
 b) Is prefetching always recommended, or should CUDA manage memory?  Give some use cases in which one is better than the other.
-a
 
+In our results, prefetching reduced the Kernel Max at 2^28 from 785.33 ms to 310.49 ms (2.50x speedup). It also replaced 20,491 small on-demand transfers (avg 0.089 MB) with 1,024 bulk transfers of 2.097 MB, which use the PCIe bus far more efficiently. Prefetching works well here because our access pattern is simple and fully known in advance and the data (~4.3 GB at 2^28) fits in the T4's 16 GB of memory. This means the utilization of the PCIe bus was used far more efficiently. The burden is placed instead on the Host where from 1.33 ms to 841.66 ms at 2^28. This is the cudaDevicesynchronise which relates to the API call from Host that exists on the CPU. 
 
-a
+The Use cases where prefetching is better
+- (1) The whole dataset is used and the access pattern is known: element-wise vector operations like ours, matrix multiplication, image filters.
+- (2) The data is reused across many kernel launches:** iterative simulations or repeated processing, where the transfer is paid once and every launch runs at full speed.
+- (3)Data that the CPU and GPU take turns using in large, clearly defined phases:** prefetching at each hand-off avoids a wave of page faults every time control switches sides.
+
+#### Use cases where CUDA-managed (on-demand) memory is better
+- (1) Sparse or unpredictable access: graph traversal, hash tables, sparse matrices, or search, where only a small, data-dependent part of a large array is touched. Prefetching everything would move data that is never used.
+- (2) Datasets larger than GPU memory (oversubscription): on-demand paging lets the kernel work on data that does not fit on the GPU. Prefetching the whole range would force evictions and wasted transfers.
+
+The conlcusion then is that Prefetch is when you know which data the kernel will use and it fits on the GPU. Let CUDA manage memory when the access pattern is sparse, unpredictable, or larger than GPU memory.
+
 c.) Between SIMD and SIMT, which one is faster? Give some use cases in which one is better than the other.
 
 **SIMD vs. SIMT**
