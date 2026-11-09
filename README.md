@@ -133,7 +133,7 @@ CUDA Prefetch is grid-stride loop with the prefetch optimization. It had an exec
 #### CUDA Prefetch + Page Creation
 This variant adds explicit page creation. A and B are prefetched to the CPU before initialization, so their pages exist in host memory, and C and idx are prefetched to the Device before the kernel, so their pages are created directly in Device memory. Because C and idx hold no data yet, this prefetch transfers nothing. It only creates the pages at the destination. It had an execution time of 2.05 ms / 131.19 ms / 524.44 ms. With every page the kernel needs already exists on the Device before the first transfer. This results in no page faults occurring. The Kernel max and min are very similar at 0.070 ms / 4.350 ms / 18.44 ms. 
 
-The end-to-end improvement over Prefetch is small (534.14 → 524.44 ms, −1.8%), because the transfers are unchanged: A and B still travel host-to-device (2,147.48 MB), and all four arrays still return device-to-host (4,294.97 MB) for the correctness check. Page creation removes the first-transfer penalty but does not reduce the amount of data moved.
+The end-to-end improvement over Prefetch is small, because the transfers are unchanged: A and B still travel host-to-device (2,147.48 MB), and all four arrays still return device-to-host (4,294.97 MB) for the correctness check. Page creation removes the first-transfer penalty but does not reduce the amount of data moved.
 
 #### CUDA Prefetch + Page Creation + MemAdvise
 This is prefetch along with the optimizations of page creation and memadvice. It has an execution time of  1.40 ms / 90.02 ms / 360.37 ms. Memadvice essentially tells the device to only copy the data from the host. Kernel Min and Max of 0.07 ms / 4.34 ms / 18.44 ms is essentially the same but the time saved from it occurs from the execution time and amount of data moved. 
@@ -142,9 +142,10 @@ This variant adds cudaMemAdvise hints on A and B: cudaMemAdviseSetPreferredLocat
 
 SetReadMostly changes prefetching from moving pages to copying them. Because the kernel only reads A and B, so the inputs no longer need to be returned. Only C and idx are migrated back. Device-to-host traffic is halved (4,294.97 → 2,147.48 MB at 2^28), and its transfer time drops from 328.06 ms to 164.02 ms.
 
-The kernel itself is unaffected: Kernel min 0.066 / 4.349 / 18.01 ms and Kernel max 0.070 / 4.356 / 18.48 ms is the same as the previous variant. All of the ~31% end-to-end improvement (524.44 → 360.37 ms at 2^28) comes from the reduced device-to-host transfer, not from faster computation.
+The kernel itself is unaffected: Kernel min 0.066 / 4.349 / 18.01 ms and Kernel max 0.070 / 4.356 / 18.48 ms is the same as the previous variant. All of the end-to-end improvement comes from the reduced device-to-host transfer.
 
 To summarize the CUDA Variants, the optimization of the device runtime is the reduction combination of both amount of data and overhead applied when running these kernels. Prefetch and Page creation essentially reserves the spaces and migrates data over to the device, while MemAdvice allows input data to no longer be returned. This allows for the efficient utilization of GPU.
+
 
 ## Discussions
 
