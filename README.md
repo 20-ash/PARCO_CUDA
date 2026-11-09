@@ -91,14 +91,10 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 | CUDA Prefetch + Page Creation | 524.44 ms | 2.10× |
 | CUDA Prefetch + Page Creation + MemAdvise | 360.37 ms | 3.06× |
 
-<br>
-
-**CUDA Kernel Times**
-
 | **2^20** | Kernel Avg | Kernel Min | Kernel Max | 
 |:---:|:---:|:---:|:---:|
 | CUDA Unified | 0.18 ms | 0.07 ms | 3.50 ms |
-| CUDA Prefetch | 0.11 ms | 0.07 | 1.40 ms |
+| CUDA Prefetch | 0.11 ms | 0.07 ms | 1.40 ms |
 | CUDA Prefetch + Page Creation | 0.07 ms | 0.07 ms | 0.07 ms |
 | CUDA Prefetch + Page Creation + MemAdvise | 0.07 ms | 0.07 ms | 0.07 ms |
 
@@ -121,6 +117,20 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 ## Analysis of Results
 **Analysis of kernel execution time**
 **Analysis of speed performance across all platforms**
+
+#### CUDA Unified (Grid-Stride Loop, No Prefetch, No MemAdvise)
+CUDA Unified is baseline CUDA variant where no optimizations were placed. It had an execution time of 2.60 ms / 164.83 ms / 617.75 ms for 2^20 / 2^26 / 2^28 respectively. The kernel's max time of 3.50 ms / 191.12 ms / 785.33 ms comes entirely from the first execution. At that point, the values of A and B are still in CPU memory, and C and idx have no allocated pages anywhere. When program access a page that is not allocated yet on the device, it triggers a page fault and stalls while the driver either migrates the page host-to-device (A, B) or creates it in device memory (C, idx). This on-demand migration happens in small pieces: at 2^28, nsys recorded 20,491 host-to-device transfers averaging only 0.089 MB each, which uses the PCIe bus inefficiently and adds a per-fault overhead.
+
+Once every page is on the GPU, launches 2–30 run at the min time of 0.069 ms / 4.35 ms / 18.75 ms. That makes the first launch ~42–50× slower than a steady-state launch. This single outlier pushes the average kernel time to 44.33 ms at 2^28, more than double the minimum, and produces the largest standard deviation of all variants (139.95 ms). The 24,576 device-to-host transfers come from the CPU reading all four arrays during the correctness check, which faults the pages back to host memory.
+
+#### CUDA Prefetch
+CUDA Prefetch is grid-stride loop with the prefetch optimization. It had an execution time of 2.10 ms / 133.80 ms / 534.14 ms respectively. Prefetch is where the host requests the migration of data before executing the kernel, instead of the GPU discovering missing pages one fault at a time during runtime. This results in a Kernel Max time of: 1.40 ms / 77.71 ms / 310.49 ms. The time max time is significantly reduced while the Kernel Min time remains the same at: 0.07 ms / 4.35 ms / 18.30 ms.
+
+#### CUDA Prefetch + Page Creation
+This is prefetch inlcuding the page creation optimization. It had an execution time of 2.05 ms / 131.19 ms / 524.44 ms respectively. Page Creation tries to avoid the delays procured from page faults by having the host request the creation of pages before the kernel execution. This combined with prefetch where data is migrated to the device results in a Kernel Min and Max of 0.07 ms / 4.34 ms / 18.44 ms respectively. The reasoning behind this is because data does not need to move anymore between host-to-device and page faults are not likely to occur because pages are created and saturated with data to be processed hence why the only overhead we have is the Kernel Min. 
+
+#### CUDA Prefetch + Page Creation + MemAdvise
+This is prefetch along with the optimizations of page creation and memadvice. It has an execution time of  1.40 ms / 90.02 ms / 360.37 ms. Memadvice essentially tells the device to only copy the data from the host. Kernel Min and Max of 0.07 ms / 4.34 ms / 18.44 ms is essentially the same but the time saved from it occurs from the execution time and amount of data moved. 
 
 <br>
 
