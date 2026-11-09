@@ -143,6 +143,7 @@ SetReadMostly changes prefetching from moving pages to copying them. Because the
 
 The kernel itself is unaffected: Kernel min 0.066 / 4.349 / 18.01 ms and Kernel max 0.070 / 4.356 / 18.48 ms is the same as the previous variant. All of the end-to-end improvement comes from the reduced device-to-host transfer.
 
+#### CUDA Variants Summary
 To summarize the CUDA Variants, the optimization of the device runtime is the reduction combination of both amount of data and overhead applied when running these kernels. Prefetch and Page creation essentially reserves the spaces and migrates data over to the device, while MemAdvice allows input data to no longer be returned. This allows for the efficient utilization of GPU.
 
 #### CPU implementations (C, x86-64, XMM, YMM)
