@@ -32,12 +32,22 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 
 ## Program Outputs
 
+**Correctness Check and Execution Time**
 |  | **2^20** | **2^26** | **2^28** |
 |:---:|:---:|:---:|:---:|
 | C | ![C](screenshots/C20.png) | ![C](screenshots/C24.png) | ![C](screenshots/C28.png) |
 | x86-64 | ![C](screenshots/ASM20.png) | ![C](screenshots/ASM26.png) | ![C](screenshots/ASM28.png) |
 | x86-64 SIMD XMM | ![C](screenshots/XMM20.png) | ![C](screenshots/XMM26.png) | ![C](screenshots/XMM28.png) |
 | x86-64 SIMD YMM | ![C](screenshots/YMM20.png) | ![C](screenshots/YMM26.png) | ![C](screenshots/YMM28.png) |
+| CUDA Unified | ![C](screenshots/eCUDA1_20.png) | ![C](screenshots/eCUDA1_26.png) | ![C](screenshots/eCUDA1_28.png) |
+| CUDA Prefetch | ![C](screenshots/eCUDA2_28.png) | ![C](screenshots/eCUDA2_26.png) | ![C](screenshots/eCUDA2_28.png) |
+| CUDA Prefetch + Page Creation |  ![C](screenshots/eCUDA3_20.png) | ![C](screenshots/eCUDA3_26.png) | ![C](screenshots/eCUDA3_28.png) |
+| CUDA Prefetch + Page Creation + MemAdvise | ![C](screenshots/eCUDA4_20.png) | ![C](screenshots/eCUDA4_26.png) | ![C](screenshots/eCUDA4_28.png) |
+
+<br>
+
+**nsys for all CUDA variants**
+|  | **2^20** | **2^26** | **2^28** |
 | CUDA Unified | ![C](screenshots/CUDA1_20.png) | ![C](screenshots/CUDA1_24.png) | ![C](screenshots/CUDA1_28.png) |
 | CUDA Prefetch | ![C](screenshots/CUDA2_28.png) | ![C](screenshots/CUDA2_24.png) | ![C](screenshots/CUDA2_28.png) |
 | CUDA Prefetch + Page Creation |  ![C](screenshots/CUDA3_20.png) | ![C](screenshots/CUDA3_24.png) | ![C](screenshots/CUDA3_28.png) |
