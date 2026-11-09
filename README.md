@@ -49,7 +49,3 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 | CUDA Prefetch + Page Creation + MemAdvise | 18.037 / 18.030 / 18.050 ms | 61.1× |
 
 
-CUDA 1, total time (your table)	1.46×	1.79×	1.78×
-CUDA 2, total time	1.81×	2.20×	2.06×
-CUDA 3, total time	1.85×	2.25×	2.10×
-CUDA 4, total time	2.71×	3.28×	3.06×
