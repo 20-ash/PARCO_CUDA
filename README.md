@@ -46,9 +46,9 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 | **2^20** | Execution Time | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
 | C | 3.80 ms | - |
-| x86-64 | 1.58 ms | 0.0× |
-| x86-64 SIMD XMM | 0.86 ms | 0.0× |
-| x86-64 SIMD YMM | 0.92 ms | 0.0× |
+| x86-64 | 1.58 ms | 2.41× |
+| x86-64 SIMD XMM | 0.86 ms | 4.42× |
+| x86-64 SIMD YMM | 0.92 ms | 4.13× |
 | CUDA Unified | 2.60 ms | 1.46× |
 | CUDA Prefetch | 2.10 ms | 1.81× |
 | CUDA Prefetch + Page Creation | 2.05 ms | 1.85× |
@@ -57,9 +57,9 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 | **2^26** | Execution Time | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
 | C | 294.83 ms | - |
-| x86-64 | 147.62 ms | 0.0× |
-| x86-64 SIMD XMM | 66.88 ms | 0.0× |
-| x86-64 SIMD YMM | 58.31 ms | 0.0× |
+| x86-64 | 147.62 ms | 2.00× |
+| x86-64 SIMD XMM | 66.88 ms | 4.41× |
+| x86-64 SIMD YMM | 58.31 ms | 5.06× |
 | CUDA Unified | 164.83 ms | 1.79× |
 | CUDA Prefetch | 133.80 ms | 2.20× |
 | CUDA Prefetch + Page Creation | 131.19 ms | 2.25× |
@@ -68,9 +68,9 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 | **2^28** | Execution Time | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
 | C | 1102.47 ms | - |
-| x86-64 | 263.91 ms | 0.0× |
-| x86-64 SIMD XMM | 211.67 ms | 0.0× |
-| x86-64 SIMD YMM | 256.79 ms | 0.0× |
+| x86-64 | 263.91 ms | 4.18× |
+| x86-64 SIMD XMM | 211.67 ms | 5.21× |
+| x86-64 SIMD YMM | 256.79 ms | 4.29× |
 | CUDA Unified | 617.75 ms | 1.78× |
 | CUDA Prefetch | 534.14 ms | 2.06× |
 | CUDA Prefetch + Page Creation | 524.44 ms | 2.10× |
