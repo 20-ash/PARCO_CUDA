@@ -15,45 +15,38 @@ https://colab.research.google.com/drive/105piLoWUiHgEUbi6MsV5aIq0Vw2QMx8I?usp=sh
 ## Analysis of Results
 
 
-| Vector Size (n) | C Implementation | CUDA 1 | CUDA 2 | CUDA 3 | CUDA 4 |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| **2^20** | 3.80 ms | 2.60 ms | 2.10 ms | 2.05 ms | 1.40 ms |
-| **2^26** | 294.83 ms | 164.83 ms | 133.80 ms | 131.19 ms | 90.02 ms |
-| **2^28** | 1102.47 ms | 617.75 ms | 534.14 ms | 524.44 ms | 360.37 ms |
-
-
-| **2^20** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program |
+| **2^20** | Kernel Time (avg / min / max) | Speedup vs Baseline C Program |
 |:---:|:---:|:---:|
-| C | 0.0 ms | 0.0 ms | 
-| x86-64 | 0.0 ms | 0.0 ms | 
-| x86-64 SIMD XMM | 0.0 ms | 0.0 ms | 
-| x86-64 SIMD YMM | 0.0 ms | 0.0 ms | 
-| CUDA Unifed | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch + Page Creation | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch + Page Creation + creatition + memadvice | 0.0 ms | 0.0 ms |   
+| C | 3.80 ms | 1.00× |
+| x86-64 | 0.0 ms | 0.0× |
+| x86-64 SIMD XMM | 0.0 ms | 0.0× |
+| x86-64 SIMD YMM | 0.0 ms | 0.0× |
+| CUDA Unified | 0.0663 / 0.0661 / 0.0667 ms | 57.3× |
+| CUDA Prefetch | 0.0664 / 0.0661 / 0.0667 ms | 57.2× |
+| CUDA Prefetch + Page Creation | 0.0664 / 0.0661 / 0.0668 ms | 57.2× |
+| CUDA Prefetch + Page Creation + MemAdvise | 0.0663 / 0.0661 / 0.0665 ms | 57.3× |
 
-| **2^26** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program |
-|:---:|:---:|
-| C | 0.0 ms | 0.0 ms | 
-| x86-64 | 0.0 ms | 0.0 ms | 
-| x86-64 SIMD XMM | 0.0 ms | 0.0 ms | 
-| x86-64 SIMD YMM | 0.0 ms | 0.0 ms | 
-| CUDA Unifed | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch + Page Creation | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch + Page Creation + creatition + memadvice | 0.0 ms | 0.0 ms |
+| **2^26** | Kernel Time (avg / min / max) | Speedup vs Baseline C Program |
+|:---:|:---:|:---:|
+| C | 294.83 ms | 1.00× |
+| x86-64 | 0.0 ms | 0.0× |
+| x86-64 SIMD XMM | 0.0 ms | 0.0× |
+| x86-64 SIMD YMM | 0.0 ms | 0.0× |
+| CUDA Unified | 4.339 / 4.330 / 4.340 ms | 67.9× |
+| CUDA Prefetch | 4.334 / 4.330 / 4.340 ms | 68.0× |
+| CUDA Prefetch + Page Creation | 4.340 / 4.340 / 4.340 ms | 67.9× |
+| CUDA Prefetch + Page Creation + MemAdvise | 4.340 / 4.340 / 4.340 ms | 67.9× |
 
-| **2^28** | Kernel Time ( avg | min | max )  | Speedup vs Baseline C Program |
-|:---:|:---:|
-| C | 0.0 ms | 0.0 ms | 
-| x86-64 | 0.0 ms | 0.0 ms | 
-| x86-64 SIMD XMM | 0.0 ms | 0.0 ms | 
-| x86-64 SIMD YMM | 0.0 ms | 0.0 ms | 
-| CUDA Unifed | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch + Page Creation | 0.0 ms | 0.0 ms |   
-| CUDA Prefetch + Page Creation + creatition + memadvice | 0.0 ms | 0.0 ms |
+| **2^28** | Kernel Time (avg / min / max) | Speedup vs Baseline C Program |
+|:---:|:---:|:---:|
+| C | 1102.47 ms | 1.00× |
+| x86-64 | 0.0 ms | 0.0× |
+| x86-64 SIMD XMM | 0.0 ms | 0.0× |
+| x86-64 SIMD YMM | 0.0 ms | 0.0× |
+| CUDA Unified | 18.007 / 18.000 / 18.020 ms | 61.2× |
+| CUDA Prefetch | 17.992 / 17.980 / 18.000 ms | 61.3× |
+| CUDA Prefetch + Page Creation | 18.037 / 18.020 / 18.050 ms | 61.1× |
+| CUDA Prefetch + Page Creation + MemAdvise | 18.037 / 18.030 / 18.050 ms | 61.1× |
 
 
 CUDA 1, total time (your table)	1.46×	1.79×	1.78×
