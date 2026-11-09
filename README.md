@@ -156,7 +156,7 @@ CUDA’s best version (Prefetch + Page Creation + MemAdvise) is 2.71× to 3.28×
 
 (2) On top of that, Unified Memory adds extra waiting time for the system to move pages around, plus a small cost to start and finish each GPU job. Each CUDA improvement (prefetch, page creation, MemAdvise) helped because it cut down this waiting, which shows that moving the data is what slows CUDA down. The CPU doesn’t have this problem because the data is already sitting right next to it, so it can start working immediately. 
 
-Therefore, for a simple operation like this project where the data starts on the CPU side, the CPU versions are simply the better fit. The GPU would only win if the data stayed on the GPU across many jobs, or if each number needed a lot more math.
+<mark>Therefore, for a simple operation like this project where the data starts on the CPU side, the CPU versions are simply the better fit. The GPU would only win if the data stayed on the GPU across many jobs, or if each number needed a lot more math.</mark>
 
 <br>
 
@@ -188,7 +188,7 @@ The Use cases where prefetching is better
 - (1) Sparse or unpredictable access: graph traversal, hash tables, sparse matrices, or search, where only a small, data-dependent part of a large array is touched. Prefetching everything would move data that is never used.
 - (2) Datasets larger than GPU memory (oversubscription): on-demand paging lets the kernel work on data that does not fit on the GPU. Prefetching the whole range would force evictions and wasted transfers.
 
-The conlcusion then is that Prefetch is when you know which data the kernel will use and it fits on the GPU. Let CUDA manage memory when the access pattern is sparse, unpredictable, or larger than GPU memory.
+<mark>The conclusion then is that Prefetch is when you know which data the kernel will use and it fits on the GPU. Let CUDA manage memory when the access pattern is sparse, unpredictable, or larger than GPU memory.</mark>
 
 c.) Between SIMD and SIMT, which one is faster? Give some use cases in which one is better than the other.
 
@@ -235,4 +235,4 @@ Both SIMD and SIMT exploit data parallelism but differ in how they process data.
 
 <br>
 
-Overall, SIMT is more suitable for larger inputs because it takes advantage of greater parallelism and GPU memory bandwidth. SIMD is more practical for smaller inputs since it avoids GPU launch and data transfer overhead.
+<mark>Overall, SIMT is more suitable for larger inputs because it takes advantage of greater parallelism and GPU memory bandwidth. SIMD is more practical for smaller inputs since it avoids GPU launch and data transfer overhead.</mark>
