@@ -208,13 +208,13 @@ a.) How does block size affect execution time (observing various elements and us
 
 A GPU is made up of Streaming Multiprocessors (SMs), the processing units that run the threads. The T4 has 40 SMs, and each one can hold up to 1024 threads and 16 blocks at a time. The remaining blocks wait in a queue until a running block finishes and frees its space.
 
-Based on the ncu of the final CUDA version (Prefetch + Page Creation + MemAdvise) at 2^28 with 256 threads per block, the kernel took 18.03 ms and used 86.6% of the T4's memory bandwidth, while compute usage was only 24.1%. Each warp spent most of its time waiting for data from memory. This means the kernel is limited by memory, so once each SM is filled with threads, adding more threads per block does not make it faster.
+Based on the ncu profile of the final CUDA version (Prefetch + Page Creation + MemAdvise) at 2^28 with 256 threads per block, the kernel took 18.03 ms and used 86.6% of the T4's memory bandwidth, while compute usage was only 24.1%. Each warp spent most of its time waiting for data from memory. This means the kernel is limited by memory, so once each SM is filled with threads, adding more threads per block does not make it faster.
 
-Small blocks (such as 32) would probably be slower because the SM hits its 16-block limit before it is filled with threads, leaving half of its capacity unused. Very large blocks (such as 1024) would probably be slightly slower because the SM must wait for every thread in a block to finish before starting a new one. Block sizes from 64 to 512 fill the SM completely, so they would likely perform about the same.
+Small blocks (such as 32) would probably be slower because the SM hits its 16-block limit before it is filled with threads, leaving half of its capacity unused. Very large blocks (such as 1024) would probably be slightly slower because each SM can only hold one block, so the whole SM sits idle while waiting for the slowest thread in that block to finish before a new block can start. Block sizes from 64 to 512 fill the SM completely, so they would likely perform about the same on the T4.
 
 These results are specific to 2^28 on the final CUDA version and may differ at other input sizes or in the earlier CUDA versions.
 
-<mark>A block size of 256 is recommended. It fills every SM completely, stays well below the 16-block limit, and divides evenly into the 1024 and 1536 thread limits of current GPUs. Block sizes from 64 to 512 would probably perform about the same, while very small blocks leave the SM partly empty and very large blocks make the SM wait longer between blocks.</mark>
+<mark>A block size of 256 is recommended. It fills every SM completely, stays well below the 16-block limit, and divides evenly into the 1024 and 1536 thread limits of current GPUs. Block sizes from 64 to 512 would probably perform about the same on the T4, but smaller sizes such as 64 would not fill the SM on GPUs with 1536 threads per SM. Very small blocks leave the SM partly empty, while very large blocks make the SM wait longer between blocks.</mark>
 
 b) Is prefetching always recommended, or should CUDA manage memory?  Give some use cases in which one is better than the other.
 
