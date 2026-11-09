@@ -48,6 +48,7 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 
 **nsys for all CUDA variants**
 |  | **2^20** | **2^26** | **2^28** |
+|:---:|:---:|:---:|:---:|
 | CUDA Unified | ![C](screenshots/CUDA1_20.png) | ![C](screenshots/CUDA1_24.png) | ![C](screenshots/CUDA1_28.png) |
 | CUDA Prefetch | ![C](screenshots/CUDA2_28.png) | ![C](screenshots/CUDA2_24.png) | ![C](screenshots/CUDA2_28.png) |
 | CUDA Prefetch + Page Creation |  ![C](screenshots/CUDA3_20.png) | ![C](screenshots/CUDA3_24.png) | ![C](screenshots/CUDA3_28.png) |
