@@ -96,6 +96,7 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 | CUDA Prefetch | 28.06 ms | 18.30 ms | 310.49 ms |
 | CUDA Prefetch + Page Creation | 18.35 ms | 18.04 ms | 18.44 ms |
 | CUDA Prefetch + Page Creation + MemAdvise | 18.31 ms | 18.01 ms | 18.48 ms |
+
 <br>
 
 ## Analysis of Results
@@ -105,9 +106,23 @@ Each kernel is run 30 times with no warm-up launch. The C version is timed in th
 <br>
 
 ## Discussions
+
+**Problems Encountered, Methodology, and AHA Moments**
 Our group did not encounter significant problems throughout the project, as the implementation followed the approach from the previous discovery series and recorded class lecture. We kept the kernel identical across all four CUDA variants to ensure that differences in execution time came from memory management techniques rather than computation. Each variant was tested 30 times using problem sizes of 2²⁰, 2²⁶, and 2²⁸, profiled with nsys and ncu, and checked against the same max/index logic as the C version, with the first and last five elements displayed for verification. We also didn't have any major AHA moments since most of the concepts were already discussed in class, but working on our own kernel helped us see how much data transfer between the CPU and GPU affects performance.
 
 <br>
 
-**differences between SIMD and SIMT in handling parallelism. Include also the PROS and CONS of using SIMD and SIMT in your use case.**
+**SIMD vs. SIMT**
+Both SIMD and SIMT exploit data parallelism but differ in how they process data. In SIMD, a single thread processes multiple elements using packed instructions. In our assembly kernels, we manually processed 4 floats using XMM registers or 8 using YMM registers, requiring explicit index increments and remainder handling (e.g., 3 leftover elements at n = 1003). In SIMT, each thread executes the same scalar code on one element at a time, with the GPU grouping threads into warps of 32 and managing their execution. Our grid-stride loop and `i < N` condition let each thread cover multiple elements at the larger sizes and handled different input sizes without additional remainder code.
 
+- **SIMD**
+
+    * Pros: Lower overhead since data stays in CPU memory with no GPU transfers, and efficient processing through packed instructions.
+    * Cons: Fixed vector widths, manual remainder handling, and a more complex assembly implementation.
+
+- **SIMT**
+
+    * Pros: Thousands of threads enable greater parallelism and memory bandwidth utilization. Scalar-style kernel code is also simpler and scales more easily across input sizes.
+    * Cons: CPU-GPU data movement overhead, initial page-fault costs, and potential branch divergence. In our case, the `if (A[i] >= B[i])` condition is simple, so divergence is expected to have little impact.
+
+Overall, SIMT is more suitable for larger inputs because it takes advantage of greater parallelism and GPU memory bandwidth. SIMD is more practical for smaller inputs since it avoids GPU launch and data transfer overhead.
